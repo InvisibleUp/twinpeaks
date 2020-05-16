@@ -82,12 +82,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbContent.DetectUrls = false;
             this.rtbContent.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbContent.Location = new System.Drawing.Point(13, 43);
             this.rtbContent.Name = "rtbContent";
+            this.rtbContent.ReadOnly = true;
             this.rtbContent.Size = new System.Drawing.Size(621, 356);
             this.rtbContent.TabIndex = 4;
             this.rtbContent.Text = "";
+            this.rtbContent.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbContent_LinkClicked);
             // 
             // statusStrip
             // 

@@ -14,7 +14,8 @@ namespace TwinPeaks
     public partial class MainForm : Form
     {
         List<Uri> history = new List<Uri>();
-        Uri home = new Uri("gemini://gemini.circumlunar.space/");
+        //Uri home = new Uri("gemini://gemini.circumlunar.space/");
+        Uri home = new Uri("gemini://gemini.conman.org/test/torture/");
 
         public MainForm()
         {
@@ -26,19 +27,18 @@ namespace TwinPeaks
             lblStatus.Text = "Ready";
 
             // Navigate to homepage
-            tbURL.Text = home.ToString();
-            btnGo_Click(null, null);
+            Navigate(home);
         }
 
-        private void btnGo_Click(object sender, EventArgs evt)
+        private void Navigate(Uri target)
         {
-            Uri target = new Uri(tbURL.Text);
-            string content;
+            string data;
+            lblStatus.Text = "Loading...";
             
             try {
                 switch(target.Scheme) {
                 case "gemini":
-                    content = GeminiClient.Fetch(target);
+                    data = Protocols.Gemini.Fetch(target);
                     break;
                 default:
                     //System.Launcher.LaunchUriAsync(target);
@@ -53,8 +53,32 @@ namespace TwinPeaks
                 //throw e;
             }
 
-            rtbContent.Text = content;
+            // be lazy, assume gemini
+            rtbContent.Rtf = FileHandlers.Gemini.Format(data);
             lblStatus.Text = "Ready";
+            tbURL.Text = target.AbsoluteUri;
+            history.Add(target);
+        }
+
+        private void btnGo_Click(object sender, EventArgs evt)
+        {
+            Uri target = new Uri(tbURL.Text);
+            Navigate(target);
+        }
+
+        private void rtbContent_LinkClicked(object sender, LinkClickedEventArgs evt)
+        {
+            Uri newUri;
+            Log.Debug(evt.LinkText);
+
+            try {
+                newUri = new Uri(evt.LinkText);
+            } catch (Exception e) {
+                Uri oldUri = new Uri(tbURL.Text);
+                newUri = new Uri(oldUri, evt.LinkText);
+            }
+
+            Navigate(newUri);
         }
     }
 }

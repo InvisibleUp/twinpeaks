@@ -8,12 +8,13 @@ using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Serilog;
+using System.Text.RegularExpressions;
 
-namespace TwinPeaks
+namespace TwinPeaks.Protocols
 {
     // Significant portions of this code taken from
     // https://docs.microsoft.com/en-us/dotnet/api/system.net.security.sslstream
-    class GeminiClient
+    class Gemini
     {
         private static Hashtable certificateErrors = new Hashtable();
         const int DefaultPort = 1965;
@@ -47,8 +48,40 @@ namespace TwinPeaks
             StringBuilder messageData = new StringBuilder();
             int bytes = -1;
 
+            bool hasSeenResponse = false;
+            byte respMajor, respMinor;
+
             do {
                 bytes = sslStream.Read(buffer, 0, buffer.Length);
+
+                // Check response code
+                if (!hasSeenResponse) {
+                    respMajor = buffer[0];
+                    respMinor = buffer[1];
+
+                    switch(respMajor) {
+                        case 1: // Text input
+                            // TODO
+                            break;
+                        case 2: // OK
+                            // strip/parse meta and continue
+                            break;
+                        case 3: // Redirect
+                            // TODO: raise "RedirectException"
+                            break;
+                        case 4: // Temporary failure
+                            // return verbatim
+                            break;
+                        case 5: // Permanent failure
+                            // return verbatim
+                            break;
+                        case 6: // Client cert required
+                            // return verbatim
+                            break;
+                    }
+
+                    hasSeenResponse = true;
+                }
 
                 // Use Decoder class to convert from bytes to UTF8
                 // in case a character spans two buffers.
