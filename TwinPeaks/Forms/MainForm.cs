@@ -30,7 +30,7 @@ namespace TwinPeaks
             Navigate(home);
         }
 
-        private void Navigate(Uri target)
+        private async void Navigate(Uri target)
         {
             string data;
             lblStatus.Text = "Loading...";
@@ -42,8 +42,8 @@ namespace TwinPeaks
                     break;
                 default:
                     //System.Launcher.LaunchUriAsync(target);
-                    Log.Error("Unknown URI scheme {scheme}", target.Scheme);
-                    lblStatus.Text = string.Format("Unknown URI scheme {0}", target.Scheme);
+                    Log.Error("Unknown URI scheme '{scheme}'", target.Scheme);
+                    lblStatus.Text = string.Format("Unknown URI scheme '{0}'", target.Scheme);
                     return;
                 }
             } catch (Exception e) {

@@ -41,17 +41,12 @@ namespace TwinPeaks.FileHandlers
             return sb.ToString();
         }
 
-        public static string Format(string input)
+        private static string FormatHeadings(string input, int size_std)
         {
-            // TODO: Make user-configurable
-            const int size_std = 20;
-            const int size_h1 = (int)(size_std * 1.5);
-            const int size_h2 = (int)(size_std * 1.3);
-            const int size_h3 = (int)(size_std * 1.15);
-
-            // Remove response line
-            input = Regex.Replace(input, @"^(.+)", "");
-            input = Txt2RTF(input, size_std);
+            // TODO: make user-configurable
+            int size_h1 = (int)(size_std * 1.5);
+            int size_h2 = (int)(size_std * 1.3);
+            int size_h3 = (int)(size_std * 1.15);
 
             /// Format headings ///
             // h1 (#)
@@ -76,15 +71,32 @@ namespace TwinPeaks.FileHandlers
                 RegexOptions.Multiline
             );
 
-            // Create hyperlinks
-            const string hyperlink_out = @"{\field{\*\fldinst HYPERLINK "
-                + "\"$1\"" + @"}{\fldrslt{$2}}}";
+            return input;
+        }
+
+        private static string FormatLinks(string input)
+        {
             input = Regex.Replace(
                 input,
-                @"^=>\s+(\S+)\s+(.+)$",
-                hyperlink_out,
+                @"^=>\s+(\S+)[ \t]*(.*)$",
+                @"{\field{\*\fldinst HYPERLINK " + "\"$1\"" + @"}{\fldrslt{$2}}}",
                 RegexOptions.Multiline
             );
+            return input;
+        }
+
+        public static string Format(string input)
+        {
+            // TODO: Make user-configurable
+            const int size_std = 20;
+
+            // Remove response line
+            input = Regex.Replace(input, @"^(.+)", "");
+
+            // Do markup stuff
+            input = Txt2RTF(input, size_std);
+            input = FormatHeadings(input, size_std);
+            input = FormatLinks(input);
 
             return input;
         }
