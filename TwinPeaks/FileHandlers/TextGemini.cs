@@ -59,7 +59,8 @@ namespace TwinPeaks.FileHandlers
             string label;
 
             if (firstWhitespace == -1) {
-                label = url = remainder;
+                url = remainder;
+                label = "";
             } else {
                 url = remainder.Substring(0, firstWhitespace).Trim();
                 label = remainder.Substring(firstWhitespace).Trim();
@@ -69,15 +70,22 @@ namespace TwinPeaks.FileHandlers
             if (url.EndsWith("\\par")) {
                 url = url.Substring(0, url.LastIndexOf('\\'));
             }
+            if (label.EndsWith("\\par")) {
+                label = label.Substring(0, label.LastIndexOf('\\'));
+            }
 
             // Default protocol is "gemini"
             if (url.StartsWith("://")) { url = "gemini" + url; }
-            if (url.StartsWith("//")) { url = "gemini:" + url; }
+            else if (url.StartsWith("//")) { url = "gemini:" + url; }
+
+            
 
             string output = (
                 @"{\field{\*\fldinst HYPERLINK "
                 + '"' + url + '"'
-                + @" }{\fldrslt{" + label + "}}}\r\n"
+                + @" }{\fldrslt{" + url + "}}} "
+                + label // the stupidest hack ever. i'm sorry.
+                + "\\par\r\n"
             );
             return output;
         }
