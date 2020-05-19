@@ -13,7 +13,7 @@ namespace TwinPeaks.FileHandlers
             StringBuilder sb = new StringBuilder(
                 "<!DOCTYPE html>\r\n<html>\r\n" +
                 "<style>\r\n" +
-                "html { font-family: Consolas, monospace; }\r\n" +
+                "html { font-family: Arial, sans-serif; }\r\n" +
                 "</style>\r\n"
             );
             foreach (char c in input) {

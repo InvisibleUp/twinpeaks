@@ -63,9 +63,11 @@ namespace TwinPeaks
 
             htmlContent.Text = "";
             switch (resp.mime) {
-            case "text/gemini":
-                htmlContent.Text = FileHandlers.TextGemini.Format(resp.pyld.ToArray());
+            case "text/gemini": {
+                var fmt = new FileHandlers.TextGemini();
+                htmlContent.Text = fmt.Format(resp.pyld.ToArray());
                 break;
+            }
             default: // interpet as plain text by default
                 htmlContent.Text = FileHandlers.TextPlain.Format(resp.pyld.ToArray());
                 break; 

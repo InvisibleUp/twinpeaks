@@ -10,6 +10,8 @@ namespace TwinPeaks.FileHandlers
 {
     class TextGemini
     {
+        bool is_literal = false;
+
         private static string FormatLineAsHeading(string input)
         {
             int level = 0;
@@ -80,7 +82,18 @@ namespace TwinPeaks.FileHandlers
             return string.Format("<div>=&gt; <a href=\"{0}\">{1}</a></div>", url, label);
         }
 
-        public static string Format(byte[] rawinput)
+        public string FormatLineAsCode(string line)
+        {
+            if (line.StartsWith("```")) {
+                this.is_literal = !this.is_literal;
+
+                if (this.is_literal) { return "<pre>\r\n"; }
+                else { return "</pre>\r\n"; }
+            }
+            return line;
+        }
+
+        public string Format(byte[] rawinput)
         {
             // TODO: encodings other than UTF8 exist...
             string input = Encoding.UTF8.GetString(rawinput);
@@ -96,8 +109,12 @@ namespace TwinPeaks.FileHandlers
                 while ((line = reader.ReadLine()) != null)
                 {
                     string lineout = line;
-                    lineout = FormatLineAsHeading(lineout);
-                    lineout = FormatLineAsLink(lineout);
+                    if (!is_literal) {
+                        lineout = FormatLineAsHeading(lineout);
+                        lineout = FormatLineAsLink(lineout);
+                    }
+
+                    lineout = FormatLineAsCode(lineout);
                     output.WriteLine(lineout);
                 }
             }
