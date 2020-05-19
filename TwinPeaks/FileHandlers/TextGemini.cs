@@ -10,15 +10,11 @@ namespace TwinPeaks.FileHandlers
 {
     class TextGemini
     {
-        private static string FormatLineAsHeading(string input, int size_std)
+        private static string FormatLineAsHeading(string input)
         {
-            // TODO: make user-configurable
-            int size_h1 = (int)(size_std * 1.5);
-            int size_h2 = (int)(size_std * 1.3);
-            int size_h3 = (int)(size_std * 1.15);
-
             int level = 0;
-            int size;
+            string starttag = "";
+            string endtag = "";
 
             foreach (char c in input.Take(3))
             {
@@ -30,25 +26,30 @@ namespace TwinPeaks.FileHandlers
                 case 0:
                     return input;
                 case 1:
-                    size = size_h1;
+                    starttag = "<span style=\"font-size: 20pt\"><u>";
+                    endtag = "</u></span>";
                     break;
                 case 2:
-                    size = size_h2;
+                    starttag = "<span style=\"font-size: 16pt\"><u>";
+                    endtag = "</u></span>";
                     break;
                 case 3:
                 default:
-                    size = size_h3;
+                    starttag = "<span style=\"font-size: 14pt\"><u>";
+                    endtag = "</u></span>";
                     break;
-
             }
 
             string heading = input.Substring(level).Trim();
-            return string.Format("\\fs{0}\\ul {2} \\ul0\\fs{1}", size, size_std, heading);
+            if (heading.EndsWith("<br/>")) {
+                heading = heading.Substring(0, heading.Length - "<br/>".Length);
+            }
+            return starttag + heading + endtag;
         }
 
         private static string FormatLineAsLink(string input)
         {
-            const string linkSym = "=>";
+            const string linkSym = "=&gt;";
 
             if (!input.StartsWith(linkSym)) { return input; }
             char[] whitespace = new char[] { ' ', '\t' };
@@ -58,47 +59,34 @@ namespace TwinPeaks.FileHandlers
             string url;
             string label;
 
+            // Remove newlines
+            if (remainder.EndsWith("<br/>")) {
+                remainder = remainder.Substring(0, remainder.Length - "<br/>".Length).Trim();
+            }
+
+            // Seperate into URL and label
             if (firstWhitespace == -1) {
                 url = remainder;
-                label = "";
+                label = remainder;
             } else {
                 url = remainder.Substring(0, firstWhitespace).Trim();
                 label = remainder.Substring(firstWhitespace).Trim();
-            }
-
-            // Having newlines in the URL tends to break them...
-            if (url.EndsWith("\\par")) {
-                url = url.Substring(0, url.LastIndexOf('\\'));
-            }
-            if (label.EndsWith("\\par")) {
-                label = label.Substring(0, label.LastIndexOf('\\'));
             }
 
             // Default protocol is "gemini"
             if (url.StartsWith("://")) { url = "gemini" + url; }
             else if (url.StartsWith("//")) { url = "gemini:" + url; }
 
-            
-
-            string output = (
-                @"{\field{\*\fldinst HYPERLINK "
-                + '"' + url + '"'
-                + @" }{\fldrslt{" + url + "}}} "
-                + label // the stupidest hack ever. i'm sorry.
-                + "\\par\r\n"
-            );
-            return output;
+            return string.Format("<div>=&gt; <a href=\"{0}\">{1}</a></div>", url, label);
         }
 
         public static string Format(byte[] rawinput)
         {
             // TODO: encodings other than UTF8 exist...
             string input = Encoding.UTF8.GetString(rawinput);
-            // TODO: Make user-configurable
-            const int size_std = 20; 
 
             // Convert to RTF
-            input = _Helpers.Txt2RTF(input, size_std);
+            input = _Helpers.Txt2Html(input);
 
             // Format each line...
             StringWriter output = new StringWriter();
@@ -108,7 +96,7 @@ namespace TwinPeaks.FileHandlers
                 while ((line = reader.ReadLine()) != null)
                 {
                     string lineout = line;
-                    lineout = FormatLineAsHeading(lineout, size_std);
+                    lineout = FormatLineAsHeading(lineout);
                     lineout = FormatLineAsLink(lineout);
                     output.WriteLine(lineout);
                 }

@@ -8,38 +8,32 @@ namespace TwinPeaks.FileHandlers
 {
     class _Helpers
     {
-        public static string Txt2RTF(string input, int size_std)
+        public static string Txt2Html(string input)
         {
             StringBuilder sb = new StringBuilder(
-                @"{\rtf1\ansi " // RTF header
-                + @"\fs" + size_std.ToString() + " " // set default font size
-                + "\r\n"
+                "<!DOCTYPE html>\r\n<html>\r\n" +
+                "<style>\r\n" +
+                "html { font-family: Consolas, monospace; }\r\n" +
+                "</style>\r\n"
             );
-            foreach (char c in input)
-            {
-                if (c <= 0x7f) {
-                    // escaping rtf characters
-                    switch (c) {
-                    case '\\':
-                    case '{':
-                    case '}':
-                        sb.Append('\\');
-                        break;
-                    case '\r':
-                        continue;
-                    case '\n':
-                        sb.Append("\\par");
-                        break;
-                    }
+            foreach (char c in input) {
+                switch (c) {
+                case '<':
+                    sb.Append("&lt;");
+                    continue;
+                case '>':
+                    sb.Append("&gt;");
+                    continue;
+                case '\r':
+                    continue;
+                case '\n':
+                    sb.Append("<br/>");
+                    break;
+                }
 
-                    sb.Append(c);
-                }
-                // converting special characters
-                else {
-                    sb.Append("\\u" + Convert.ToUInt32(c) + "?");
-                }
+                sb.Append(c);
             }
-            sb.Append("\r\n}");
+            sb.Append("</html>");
             return sb.ToString();
         }
     }

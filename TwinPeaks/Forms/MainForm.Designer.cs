@@ -32,9 +32,9 @@
             this.btnFwd = new System.Windows.Forms.Button();
             this.tbURL = new System.Windows.Forms.TextBox();
             this.btnGo = new System.Windows.Forms.Button();
-            this.rtbContent = new System.Windows.Forms.RichTextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.htmlContent = new TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,22 +78,6 @@
             this.btnGo.UseVisualStyleBackColor = true;
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
-            // rtbContent
-            // 
-            this.rtbContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbContent.DetectUrls = false;
-            this.rtbContent.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbContent.Location = new System.Drawing.Point(13, 43);
-            this.rtbContent.Name = "rtbContent";
-            this.rtbContent.ReadOnly = true;
-            this.rtbContent.Size = new System.Drawing.Size(621, 356);
-            this.rtbContent.TabIndex = 4;
-            this.rtbContent.Text = "";
-            this.rtbContent.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.rtbContent_LinkClicked);
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -110,14 +94,33 @@
             this.lblStatus.Size = new System.Drawing.Size(52, 17);
             this.lblStatus.Text = "lblStatus";
             // 
+            // htmlContent
+            // 
+            this.htmlContent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.htmlContent.AutoScroll = true;
+            this.htmlContent.AutoScrollMinSize = new System.Drawing.Size(621, 20);
+            this.htmlContent.BackColor = System.Drawing.SystemColors.Window;
+            this.htmlContent.BaseStylesheet = null;
+            this.htmlContent.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.htmlContent.Location = new System.Drawing.Point(13, 42);
+            this.htmlContent.Name = "htmlContent";
+            this.htmlContent.Size = new System.Drawing.Size(621, 357);
+            this.htmlContent.TabIndex = 6;
+            this.htmlContent.Text = "htmlPanel1";
+            this.htmlContent.UseGdiPlusTextRendering = true;
+            this.htmlContent.UseSystemCursors = true;
+            this.htmlContent.LinkClicked += new System.EventHandler<TheArtOfDev.HtmlRenderer.Core.Entities.HtmlLinkClickedEventArgs>(this.htmlContent_LinkClicked);
+            // 
             // MainForm
             // 
             this.AcceptButton = this.btnGo;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 424);
+            this.Controls.Add(this.htmlContent);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.rtbContent);
             this.Controls.Add(this.btnGo);
             this.Controls.Add(this.tbURL);
             this.Controls.Add(this.btnFwd);
@@ -138,9 +141,9 @@
         private System.Windows.Forms.Button btnFwd;
         private System.Windows.Forms.TextBox tbURL;
         private System.Windows.Forms.Button btnGo;
-        private System.Windows.Forms.RichTextBox rtbContent;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel htmlContent;
     }
 }
 
