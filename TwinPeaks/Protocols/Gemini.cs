@@ -15,12 +15,14 @@ using System.Threading.Tasks;
 
 namespace TwinPeaks.Protocols
 {
-    struct GeminiResponse
+    struct GeminiResponse : IResponse
     {
         public char codeMajor;
         public char codeMinor;
         public string meta;
-        public List<byte> pyld;
+        public List<byte> pyld { get; set; }
+        public string mime { get; set; }
+        public string encoding { get; set; }
 
         public GeminiResponse(List<byte> buffer, int bytes)
         {
@@ -35,6 +37,9 @@ namespace TwinPeaks.Protocols
             byte[] metaraw = buffer.Skip(metaStart).Take(metaEnd).ToArray();
             this.meta = Encoding.UTF8.GetString(metaraw.ToArray()).TrimStart();
             this.pyld = buffer.Skip(metaEnd).Take(pyldLen).ToList();
+
+            this.mime = "text/gemini";
+            this.encoding = "UTF-8";
         }
 
         public override string ToString()
@@ -92,7 +97,7 @@ namespace TwinPeaks.Protocols
             return resp;
         }
 
-        public async static Task<byte[]> Fetch(Uri hostURL)
+        public async static Task<IResponse> Fetch(Uri hostURL)
         {
         Refetch:
             // Set remote port
@@ -141,7 +146,7 @@ namespace TwinPeaks.Protocols
                     // TODO
                     //break;
                 case '2': // OK
-                    return resp.pyld.ToArray();
+                    break;
                 case '3': // Redirect
                     hostURL = new Uri(resp.meta);
                     goto Refetch;
@@ -150,7 +155,8 @@ namespace TwinPeaks.Protocols
                 case '5': // Permanent failure
                 case '6': // Client cert required
                     Log.Error(resp.ToString());
-                    return Encoding.UTF8.GetBytes(resp.ToString());
+                    resp.pyld = Encoding.UTF8.GetBytes(resp.ToString()).ToList();
+                    break;
 
                 default:
                     throw new Exception(
@@ -158,7 +164,7 @@ namespace TwinPeaks.Protocols
                     );
             }
 
-            return resp.pyld.ToArray();
+            return resp;
         }
     }
 }

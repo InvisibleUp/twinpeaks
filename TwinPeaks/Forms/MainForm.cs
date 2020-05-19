@@ -14,8 +14,8 @@ namespace TwinPeaks
     public partial class MainForm : Form
     {
         List<Uri> history = new List<Uri>();
+        int historyPos = -1;
         Uri home = new Uri("gemini://gemini.circumlunar.space/");
-        //Uri home = new Uri("gemini://gemini.conman.org/test/torture/");
 
         public MainForm()
         {
@@ -28,17 +28,26 @@ namespace TwinPeaks
 
             // Navigate to homepage
             Navigate(home);
+            UpdateHistory(home);
+        }
+
+        // Add page to history
+        private void UpdateHistory(Uri target)
+        {
+            historyPos += 1;
+            history = history.Take(historyPos).ToList();
+            history.Add(target);
         }
 
         private async void Navigate(Uri target)
         {
-            byte[] data;
+            Protocols.IResponse resp;
             lblStatus.Text = "Loading...";
             
             try {
                 switch(target.Scheme) {
                 case "gemini":
-                    data = await Protocols.Gemini.Fetch(target);
+                    resp = await Protocols.Gemini.Fetch(target);
                     break;
                 default:
                     //System.Launcher.LaunchUriAsync(target);
@@ -50,20 +59,26 @@ namespace TwinPeaks
                 lblStatus.Text = "Error loading page";//e.ToString();
                 rtbContent.Text = e.ToString();
                 return;
-                //throw e;
             }
 
-            // be lazy, assume gemini
-            rtbContent.Rtf = FileHandlers.Gemini.Format(data);
+            switch (resp.mime) {
+            case "text/gemini":
+                rtbContent.Rtf = FileHandlers.TextGemini.Format(resp.pyld.ToArray());
+                break;
+            default: // interpet as plain text by default
+                rtbContent.Rtf = FileHandlers.TextPlain.Format(resp.pyld.ToArray());
+                break; 
+            }
+
             lblStatus.Text = "Ready";
             tbURL.Text = target.AbsoluteUri;
-            history.Add(target);
         }
 
         private void btnGo_Click(object sender, EventArgs evt)
         {
             Uri target = new Uri(tbURL.Text);
             Navigate(target);
+            UpdateHistory(target);
         }
 
         private void rtbContent_LinkClicked(object sender, LinkClickedEventArgs evt)
@@ -74,11 +89,25 @@ namespace TwinPeaks
             try {
                 newUri = new Uri(evt.LinkText);
             } catch (Exception e) {
-                Uri oldUri = new Uri(tbURL.Text);
-                newUri = new Uri(oldUri, evt.LinkText);
+                newUri = new Uri(history[historyPos], evt.LinkText);
             }
 
             Navigate(newUri);
+            UpdateHistory(newUri);
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            if (historyPos <= 0) { return; }
+            historyPos -= 1;
+            Navigate(history[historyPos]);
+        }
+
+        private void btnFwd_Click(object sender, EventArgs e)
+        {
+            if (historyPos+1 >= history.Count()) { return; }
+            historyPos += 1;
+            Navigate(history[historyPos]);
         }
     }
 }

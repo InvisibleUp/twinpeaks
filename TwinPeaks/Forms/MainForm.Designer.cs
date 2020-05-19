@@ -46,6 +46,7 @@
             this.btnBack.TabIndex = 0;
             this.btnBack.Text = "←";
             this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
             // 
             // btnFwd
             // 
@@ -55,6 +56,7 @@
             this.btnFwd.TabIndex = 1;
             this.btnFwd.Text = "→";
             this.btnFwd.UseVisualStyleBackColor = true;
+            this.btnFwd.Click += new System.EventHandler(this.btnFwd_Click);
             // 
             // tbURL
             // 
