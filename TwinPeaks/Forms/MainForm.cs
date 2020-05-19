@@ -15,7 +15,7 @@ namespace TwinPeaks
     {
         List<Uri> history = new List<Uri>();
         int historyPos = -1;
-        Uri home = new Uri("gemini://gemini.circumlunar.space/");
+        Uri home = new Uri("gemini://gemini.conman.org/test/torture/");
 
         public MainForm()
         {
@@ -61,6 +61,7 @@ namespace TwinPeaks
                 return;
             }
 
+            rtbContent.Text = "";
             switch (resp.mime) {
             case "text/gemini":
                 rtbContent.Rtf = FileHandlers.TextGemini.Format(resp.pyld.ToArray());
@@ -89,7 +90,14 @@ namespace TwinPeaks
             try {
                 newUri = new Uri(evt.LinkText);
             } catch (Exception e) {
-                newUri = new Uri(history[historyPos], evt.LinkText);
+                try {
+                    newUri = new Uri(history[historyPos], evt.LinkText);
+                } catch (Exception e2) {
+                    Log.Error(e2, "Invalid URL");
+                    lblStatus.Text = "Error loading page";
+                    rtbContent.Text = string.Format("Could not load page {0}", evt.LinkText);
+                    return;
+                }
             }
 
             Navigate(newUri);

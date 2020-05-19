@@ -65,10 +65,19 @@ namespace TwinPeaks.FileHandlers
                 label = remainder.Substring(firstWhitespace).Trim();
             }
 
+            // Having newlines in the URL tends to break them...
+            if (url.EndsWith("\\par")) {
+                url = url.Substring(0, url.LastIndexOf('\\'));
+            }
+
+            // Default protocol is "gemini"
+            if (url.StartsWith("://")) { url = "gemini" + url; }
+            if (url.StartsWith("//")) { url = "gemini:" + url; }
+
             string output = (
                 @"{\field{\*\fldinst HYPERLINK "
                 + '"' + url + '"'
-                + @" }{\fldrslt{" + label + @"}}}"
+                + @" }{\fldrslt{" + label + "}}}\r\n"
             );
             return output;
         }
@@ -97,7 +106,8 @@ namespace TwinPeaks.FileHandlers
                 }
             }
 
-            return output.ToString();
+            string outputstr = output.ToString();
+            return outputstr;
         }
     }
 }

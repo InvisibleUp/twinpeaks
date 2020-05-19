@@ -25,6 +25,8 @@ namespace TwinPeaks.FileHandlers
                     case '}':
                         sb.Append('\\');
                         break;
+                    case '\r':
+                        continue;
                     case '\n':
                         sb.Append("\\par");
                         break;
@@ -37,7 +39,7 @@ namespace TwinPeaks.FileHandlers
                     sb.Append("\\u" + Convert.ToUInt32(c) + "?");
                 }
             }
-            sb.Append("}");
+            sb.Append("\r\n}");
             return sb.ToString();
         }
     }

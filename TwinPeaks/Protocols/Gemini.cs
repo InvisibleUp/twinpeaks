@@ -99,7 +99,21 @@ namespace TwinPeaks.Protocols
 
         public async static Task<IResponse> Fetch(Uri hostURL)
         {
+            int refetchCount = 0;
         Refetch:
+            // Stop unbounded redirects
+            if (refetchCount >= 5) {
+                return new GeminiResponse {
+                    codeMajor = '3',
+                    codeMinor = '9',
+                    meta = "",
+                    pyld = Encoding.UTF8.GetBytes("Too many redirects!").ToList(),
+                    mime = "text/plain",
+                    encoding = "UTF-8"
+                };
+            }
+            refetchCount += 1;
+
             // Set remote port
             int port = hostURL.Port;
             if (port == -1) { port = DefaultPort; }
