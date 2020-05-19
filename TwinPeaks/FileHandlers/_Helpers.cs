@@ -33,7 +33,7 @@ namespace TwinPeaks.FileHandlers
 
                 sb.Append(c);
             }
-            sb.Append("</html>");
+            sb.Append("\r\n</html>");
             return sb.ToString();
         }
     }
