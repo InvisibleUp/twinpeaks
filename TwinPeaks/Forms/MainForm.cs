@@ -14,8 +14,8 @@ namespace TwinPeaks
     public partial class MainForm : Form
     {
         List<Uri> history = new List<Uri>();
-        //Uri home = new Uri("gemini://gemini.circumlunar.space/");
-        Uri home = new Uri("gemini://gemini.conman.org/test/torture/");
+        Uri home = new Uri("gemini://gemini.circumlunar.space/");
+        //Uri home = new Uri("gemini://gemini.conman.org/test/torture/");
 
         public MainForm()
         {
@@ -32,13 +32,13 @@ namespace TwinPeaks
 
         private async void Navigate(Uri target)
         {
-            string data;
+            byte[] data;
             lblStatus.Text = "Loading...";
             
             try {
                 switch(target.Scheme) {
                 case "gemini":
-                    data = Protocols.Gemini.Fetch(target);
+                    data = await Protocols.Gemini.Fetch(target);
                     break;
                 default:
                     //System.Launcher.LaunchUriAsync(target);

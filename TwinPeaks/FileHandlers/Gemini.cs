@@ -85,18 +85,17 @@ namespace TwinPeaks.FileHandlers
             return input;
         }
 
-        public static string Format(string input)
+        public static string Format(byte[] rawinput)
         {
+            string input = Encoding.UTF8.GetString(rawinput);
+
             // TODO: Make user-configurable
             const int size_std = 20;
-
-            // Remove response line
-            input = Regex.Replace(input, @"^(.+)", "");
 
             // Do markup stuff
             input = Txt2RTF(input, size_std);
             input = FormatHeadings(input, size_std);
-            input = FormatLinks(input);
+            //input = FormatLinks(input);
 
             return input;
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
@@ -9,9 +10,42 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using Serilog;
 using System.Text.RegularExpressions;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TwinPeaks.Protocols
 {
+    struct GeminiResponse
+    {
+        public char codeMajor;
+        public char codeMinor;
+        public string meta;
+        public List<byte> pyld;
+
+        public GeminiResponse(List<byte> buffer, int bytes)
+        {
+            this.codeMajor = (char)buffer[0];
+            this.codeMinor = (char)buffer[1];
+
+            int metaStart = 2;
+            int metaEnd = buffer.IndexOf((byte)'\n') - 1;
+            int pyldStart = metaEnd + 2;
+            int pyldLen = bytes - pyldStart;
+
+            byte[] metaraw = buffer.Skip(metaStart).Take(metaEnd).ToArray();
+            this.meta = Encoding.UTF8.GetString(metaraw.ToArray()).TrimStart();
+            this.pyld = buffer.Skip(metaEnd).Take(pyldLen).ToList();
+        }
+
+        public override string ToString()
+        {
+            return string.Format(
+                "{0}{1}: {2}",
+                codeMajor, codeMinor, meta 
+            );
+        }
+    }
+
     // Significant portions of this code taken from
     // https://docs.microsoft.com/en-us/dotnet/api/system.net.security.sslstream
     class Gemini
@@ -39,68 +73,28 @@ namespace TwinPeaks.Protocols
             return false;
         }
 
-        static string ReadMessage(SslStream sslStream)
+        static async Task<GeminiResponse> ReadMessage(SslStream sslStream)
         {
             // Read the  message sent by the server.
             // The end of the message is signaled using the
             // "<EOF>" marker.
             byte[] buffer = new byte[2048];
-            StringBuilder messageData = new StringBuilder();
             int bytes = -1;
 
-            bool hasSeenResponse = false;
-            byte respMajor, respMinor;
+            bytes = await sslStream.ReadAsync(buffer, 0, buffer.Length);
+            GeminiResponse resp = new GeminiResponse(buffer.ToList(), bytes);
 
-            do {
-                bytes = sslStream.Read(buffer, 0, buffer.Length);
+            while (bytes != 0) {
+                bytes = await sslStream.ReadAsync(buffer, 0, buffer.Length);
+                resp.pyld.AddRange(buffer.Take(bytes));
+            }
 
-                // Check response code
-                if (!hasSeenResponse) {
-                    respMajor = buffer[0];
-                    respMinor = buffer[1];
-
-                    switch(respMajor) {
-                        case 1: // Text input
-                            // TODO
-                            break;
-                        case 2: // OK
-                            // strip/parse meta and continue
-                            break;
-                        case 3: // Redirect
-                            // TODO: raise "RedirectException"
-                            break;
-                        case 4: // Temporary failure
-                            // return verbatim
-                            break;
-                        case 5: // Permanent failure
-                            // return verbatim
-                            break;
-                        case 6: // Client cert required
-                            // return verbatim
-                            break;
-                    }
-
-                    hasSeenResponse = true;
-                }
-
-                // Use Decoder class to convert from bytes to UTF8
-                // in case a character spans two buffers.
-                Decoder decoder = Encoding.UTF8.GetDecoder();
-                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
-                decoder.GetChars(buffer, 0, bytes, chars, 0);
-                messageData.Append(chars);
-
-                // Check for EOF.
-                if (messageData.ToString().IndexOf("<EOF>") != -1) {
-                    break;
-                }
-            } while (bytes != 0);
-
-            return messageData.ToString();
+            return resp;
         }
 
-        public static string Fetch(Uri hostURL)
+        public async static Task<byte[]> Fetch(Uri hostURL)
         {
+        Refetch:
             // Set remote port
             int port = hostURL.Port;
             if (port == -1) { port = DefaultPort; }
@@ -125,7 +119,7 @@ namespace TwinPeaks.Protocols
 
             // The server name must match the name on the server certificate.
             try {
-                sslStream.AuthenticateAsClient(hostURL.Host);
+                await sslStream.AuthenticateAsClientAsync(hostURL.Host);
             } catch (AuthenticationException e) {
                 Log.Error(e, "Authentication failure");
                 client.Close();
@@ -134,16 +128,37 @@ namespace TwinPeaks.Protocols
 
             // Gemini request format: URI\r\n
             byte[] messsage = Encoding.UTF8.GetBytes(hostURL.ToString() + "\r\n");
-            sslStream.Write(messsage);
-            sslStream.Flush();
-
+            await sslStream.WriteAsync(messsage, 0, messsage.Count());
+            await sslStream.FlushAsync();
             // Read message from the server.
-            string serverMessage = ReadMessage(sslStream);
-
+            GeminiResponse resp = await ReadMessage(sslStream);
             // Close the client connection.
             client.Close();
-            //Log.Debug("Connection to server closed");
-            return serverMessage;
+
+            // Determine what to do w/ that
+            switch (resp.codeMajor) {
+                //case '1': // Text input
+                    // TODO
+                    //break;
+                case '2': // OK
+                    return resp.pyld.ToArray();
+                case '3': // Redirect
+                    hostURL = new Uri(resp.meta);
+                    goto Refetch;
+
+                case '4': // Temporary failure
+                case '5': // Permanent failure
+                case '6': // Client cert required
+                    Log.Error(resp.ToString());
+                    return Encoding.UTF8.GetBytes(resp.ToString());
+
+                default:
+                    throw new Exception(
+                        string.Format("Invalid response code {0}", resp.codeMajor)
+                    );
+            }
+
+            return resp.pyld.ToArray();
         }
     }
 }
