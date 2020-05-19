@@ -126,7 +126,7 @@
             this.Controls.Add(this.btnFwd);
             this.Controls.Add(this.btnBack);
             this.Name = "MainForm";
-            this.Text = "Twin Peaks";
+            this.Text = "Twin Peaks v0.2.0";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
