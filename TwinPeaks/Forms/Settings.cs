@@ -148,9 +148,16 @@ namespace TwinPeaks.Forms
             this.Close();
         }
 
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            this.Close();
+        }
+
+        // TODO: this probably isn't the way to handle this...
         private void btnRegHandler_Click(object sender, EventArgs e)
         {
-            RegistryKey key = Registry.ClassesRoot.OpenSubKey("TwinPeaksGemini");  //open myApp protocol's subkey
+            RegistryKey key = Registry.ClassesRoot.OpenSubKey("TwinPeaksGemini");
             string appPath = Environment.GetCommandLineArgs()[0];
 
             if (key == null)
@@ -166,7 +173,6 @@ namespace TwinPeaks.Forms
 
             key.Close();
         }
-
         private void btnUnregHandler_Click(object sender, EventArgs e)
         {
             Registry.ClassesRoot.DeleteSubKeyTree("TwinPeaksGemini");

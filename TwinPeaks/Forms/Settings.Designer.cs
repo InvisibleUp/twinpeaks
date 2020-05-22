@@ -52,13 +52,12 @@
             this.btnColorFG = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btnUnregHandler = new System.Windows.Forms.Button();
-            this.btnRegHandler = new System.Windows.Forms.Button();
             this.tbHome = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.dlgColorFG = new System.Windows.Forms.ColorDialog();
             this.dlgColorBG = new System.Windows.Forms.ColorDialog();
             this.dlgColorLink = new System.Windows.Forms.ColorDialog();
+            this.btnReset = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numH3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numH2)).BeginInit();
@@ -70,7 +69,7 @@
             // btnAccept
             // 
             this.btnAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAccept.Location = new System.Drawing.Point(241, 324);
+            this.btnAccept.Location = new System.Drawing.Point(160, 297);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(75, 23);
             this.btnAccept.TabIndex = 1;
@@ -82,7 +81,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(322, 324);
+            this.btnCancel.Location = new System.Drawing.Point(322, 297);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 2;
@@ -287,38 +286,14 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btnUnregHandler);
-            this.groupBox3.Controls.Add(this.btnRegHandler);
             this.groupBox3.Controls.Add(this.tbHome);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Location = new System.Drawing.Point(13, 237);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(388, 81);
+            this.groupBox3.Size = new System.Drawing.Size(388, 53);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Behaviour";
-            // 
-            // btnUnregHandler
-            // 
-            this.btnUnregHandler.Enabled = false;
-            this.btnUnregHandler.Location = new System.Drawing.Point(271, 45);
-            this.btnUnregHandler.Name = "btnUnregHandler";
-            this.btnUnregHandler.Size = new System.Drawing.Size(104, 23);
-            this.btnUnregHandler.TabIndex = 3;
-            this.btnUnregHandler.Text = "← Undo that";
-            this.btnUnregHandler.UseVisualStyleBackColor = true;
-            this.btnUnregHandler.Click += new System.EventHandler(this.btnUnregHandler_Click);
-            // 
-            // btnRegHandler
-            // 
-            this.btnRegHandler.Enabled = false;
-            this.btnRegHandler.Location = new System.Drawing.Point(12, 45);
-            this.btnRegHandler.Name = "btnRegHandler";
-            this.btnRegHandler.Size = new System.Drawing.Size(253, 23);
-            this.btnRegHandler.TabIndex = 2;
-            this.btnRegHandler.Text = "Make TwinPeaks my default Gemini browser";
-            this.btnRegHandler.UseVisualStyleBackColor = true;
-            this.btnRegHandler.Click += new System.EventHandler(this.btnRegHandler_Click);
             // 
             // tbHome
             // 
@@ -336,14 +311,26 @@
             this.label9.TabIndex = 0;
             this.label9.Text = "Homepage";
             // 
+            // btnReset
+            // 
+            this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReset.Location = new System.Drawing.Point(241, 297);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 4;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
             // Settings
             // 
             this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(413, 359);
+            this.ClientSize = new System.Drawing.Size(413, 332);
             this.ControlBox = false;
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnCancel);
@@ -389,8 +376,6 @@
         private System.Windows.Forms.Button btnColorFG;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnUnregHandler;
-        private System.Windows.Forms.Button btnRegHandler;
         private System.Windows.Forms.TextBox tbHome;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ColorDialog dlgColorFG;
@@ -398,5 +383,6 @@
         private System.Windows.Forms.Button btnColorLink;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ColorDialog dlgColorLink;
+        private System.Windows.Forms.Button btnReset;
     }
 }

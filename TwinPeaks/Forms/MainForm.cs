@@ -125,7 +125,7 @@ namespace TwinPeaks
 
             try {
                 newUri = new Uri(evt.Link);
-            } catch (Exception e) {
+            } catch (Exception) {
                 try {
                     newUri = new Uri(history[historyPos], evt.Link);
                 } catch (Exception e2) {
