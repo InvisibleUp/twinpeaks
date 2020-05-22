@@ -100,6 +100,18 @@ namespace TwinPeaks
             await Navigate(history[historyPos]);
         }
 
+        private async void btnHome_Click(object sender, EventArgs e)
+        {
+            if (await Navigate(home)) {
+                UpdateHistory(home);
+            }
+        }
+
+        private async void btnRefresh_Click(object sender, EventArgs e)
+        {
+            await Navigate(history[historyPos]);
+        }
+
         private async void htmlContent_LinkClicked(object sender, HtmlLinkClickedEventArgs evt)
         {
             Uri newUri;
@@ -125,6 +137,12 @@ namespace TwinPeaks
             if (await Navigate(newUri)) {
                 UpdateHistory(newUri);
             }
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            var x = new Forms.AboutBox();
+            x.ShowDialog();
         }
     }
 }

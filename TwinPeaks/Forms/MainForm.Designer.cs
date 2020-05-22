@@ -28,55 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnBack = new System.Windows.Forms.Button();
-            this.btnFwd = new System.Windows.Forms.Button();
-            this.tbURL = new System.Windows.Forms.TextBox();
-            this.btnGo = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.htmlContent = new TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnForward = new System.Windows.Forms.ToolStripButton();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
+            this.btnHome = new System.Windows.Forms.ToolStripButton();
+            this.tbURL = new TwinPeaks.Controls.ToolStripSpringTextBox();
+            this.btnGo = new System.Windows.Forms.ToolStripButton();
+            this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnBack
-            // 
-            this.btnBack.Location = new System.Drawing.Point(13, 13);
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(32, 23);
-            this.btnBack.TabIndex = 0;
-            this.btnBack.Text = "←";
-            this.btnBack.UseVisualStyleBackColor = true;
-            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
-            // 
-            // btnFwd
-            // 
-            this.btnFwd.Location = new System.Drawing.Point(51, 13);
-            this.btnFwd.Name = "btnFwd";
-            this.btnFwd.Size = new System.Drawing.Size(32, 23);
-            this.btnFwd.TabIndex = 1;
-            this.btnFwd.Text = "→";
-            this.btnFwd.UseVisualStyleBackColor = true;
-            this.btnFwd.Click += new System.EventHandler(this.btnFwd_Click);
-            // 
-            // tbURL
-            // 
-            this.tbURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbURL.Location = new System.Drawing.Point(90, 15);
-            this.tbURL.Name = "tbURL";
-            this.tbURL.Size = new System.Drawing.Size(506, 20);
-            this.tbURL.TabIndex = 2;
-            // 
-            // btnGo
-            // 
-            this.btnGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGo.Location = new System.Drawing.Point(602, 13);
-            this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(32, 23);
-            this.btnGo.TabIndex = 3;
-            this.btnGo.Text = "Go";
-            this.btnGo.UseVisualStyleBackColor = true;
-            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
             // statusStrip
             // 
@@ -104,47 +70,139 @@
             this.htmlContent.BackColor = System.Drawing.SystemColors.Window;
             this.htmlContent.BaseStylesheet = null;
             this.htmlContent.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.htmlContent.Location = new System.Drawing.Point(0, 42);
+            this.htmlContent.Location = new System.Drawing.Point(0, 25);
             this.htmlContent.Name = "htmlContent";
             this.htmlContent.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
-            this.htmlContent.Size = new System.Drawing.Size(646, 360);
+            this.htmlContent.Size = new System.Drawing.Size(646, 374);
             this.htmlContent.TabIndex = 6;
             this.htmlContent.Text = "htmlPanel1";
             this.htmlContent.UseGdiPlusTextRendering = true;
             this.htmlContent.UseSystemCursors = true;
             this.htmlContent.LinkClicked += new System.EventHandler<TheArtOfDev.HtmlRenderer.Core.Entities.HtmlLinkClickedEventArgs>(this.htmlContent_LinkClicked);
             // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnBack,
+            this.btnForward,
+            this.btnRefresh,
+            this.btnHome,
+            this.tbURL,
+            this.btnOptions,
+            this.btnGo});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(646, 25);
+            this.toolStrip1.TabIndex = 7;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnBack
+            // 
+            this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBack.Image = global::TwinPeaks.Properties.Resources.icoBack;
+            this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(23, 22);
+            this.btnBack.Text = "Back";
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnForward
+            // 
+            this.btnForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnForward.Image = global::TwinPeaks.Properties.Resources.icoFwd;
+            this.btnForward.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnForward.Name = "btnForward";
+            this.btnForward.Size = new System.Drawing.Size(23, 22);
+            this.btnForward.Text = "Forwards";
+            this.btnForward.Click += new System.EventHandler(this.btnFwd_Click);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRefresh.Image = global::TwinPeaks.Properties.Resources.icoRefresh;
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(23, 22);
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
+            // btnHome
+            // 
+            this.btnHome.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnHome.Image = global::TwinPeaks.Properties.Resources.icoHome;
+            this.btnHome.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(23, 22);
+            this.btnHome.Text = "Home";
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // tbURL
+            // 
+            this.tbURL.Name = "tbURL";
+            this.tbURL.Size = new System.Drawing.Size(440, 25);
+            // 
+            // btnGo
+            // 
+            this.btnGo.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnGo.Image = global::TwinPeaks.Properties.Resources.icoFwd;
+            this.btnGo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGo.Name = "btnGo";
+            this.btnGo.Size = new System.Drawing.Size(42, 22);
+            this.btnGo.Text = "Go";
+            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            // 
+            // btnOptions
+            // 
+            this.btnOptions.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnAbout});
+            this.btnOptions.Image = global::TwinPeaks.Properties.Resources.icoOptions;
+            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOptions.Name = "btnOptions";
+            this.btnOptions.Size = new System.Drawing.Size(29, 22);
+            this.btnOptions.Text = "Options";
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(180, 22);
+            this.btnAbout.Text = "About TwinPeaks";
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            // 
             // MainForm
             // 
-            this.AcceptButton = this.btnGo;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 424);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.htmlContent);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.btnGo);
-            this.Controls.Add(this.tbURL);
-            this.Controls.Add(this.btnFwd);
-            this.Controls.Add(this.btnBack);
             this.Name = "MainForm";
             this.Text = "Twin Peaks v0.2.0";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnBack;
-        private System.Windows.Forms.Button btnFwd;
-        private System.Windows.Forms.TextBox tbURL;
-        private System.Windows.Forms.Button btnGo;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private TheArtOfDev.HtmlRenderer.WinForms.HtmlPanel htmlContent;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnBack;
+        private System.Windows.Forms.ToolStripButton btnForward;
+        private System.Windows.Forms.ToolStripButton btnRefresh;
+        private System.Windows.Forms.ToolStripButton btnHome;
+        private TwinPeaks.Controls.ToolStripSpringTextBox tbURL;
+        private System.Windows.Forms.ToolStripButton btnGo;
+        private System.Windows.Forms.ToolStripDropDownButton btnOptions;
+        private System.Windows.Forms.ToolStripMenuItem btnAbout;
     }
 }
 
