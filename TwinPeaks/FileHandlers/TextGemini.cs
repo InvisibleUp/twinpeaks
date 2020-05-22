@@ -28,17 +28,17 @@ namespace TwinPeaks.FileHandlers
                 case 0:
                     return input;
                 case 1:
-                    starttag = "<span style=\"font-size: 20pt\"><u>";
-                    endtag = "</u></span>";
+                    starttag = "<div style=\"font-size: 20pt\"><u>";
+                    endtag = "</u></div>";
                     break;
                 case 2:
-                    starttag = "<span style=\"font-size: 16pt\"><u>";
-                    endtag = "</u></span>";
+                    starttag = "<div style=\"font-size: 16pt\"><u>";
+                    endtag = "</u></div>";
                     break;
                 case 3:
                 default:
-                    starttag = "<span style=\"font-size: 14pt\"><u>";
-                    endtag = "</u></span>";
+                    starttag = "<div style=\"font-size: 14pt\"><u>";
+                    endtag = "</u></div>";
                     break;
             }
 

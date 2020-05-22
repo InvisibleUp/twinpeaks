@@ -100,13 +100,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.htmlContent.AutoScroll = true;
-            this.htmlContent.AutoScrollMinSize = new System.Drawing.Size(621, 20);
+            this.htmlContent.AutoScrollMinSize = new System.Drawing.Size(646, 20);
             this.htmlContent.BackColor = System.Drawing.SystemColors.Window;
             this.htmlContent.BaseStylesheet = null;
             this.htmlContent.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.htmlContent.Location = new System.Drawing.Point(13, 42);
+            this.htmlContent.Location = new System.Drawing.Point(0, 42);
             this.htmlContent.Name = "htmlContent";
-            this.htmlContent.Size = new System.Drawing.Size(621, 357);
+            this.htmlContent.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.htmlContent.Size = new System.Drawing.Size(646, 360);
             this.htmlContent.TabIndex = 6;
             this.htmlContent.Text = "htmlPanel1";
             this.htmlContent.UseGdiPlusTextRendering = true;
