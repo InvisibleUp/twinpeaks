@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,20 @@ namespace TwinPeaks.FileHandlers
     {
         public static string Txt2Html(string input)
         {
+            var settings = Properties.Settings.Default;
             StringBuilder sb = new StringBuilder(
                 "<!DOCTYPE html>\r\n<html>\r\n" +
                 "<style>\r\n" +
-                "html { font-family: Arial, sans-serif; }\r\n" +
+                "html { " +
+                    "font-family: " + settings.fontContent.Name + "; " +
+                    "font-size: " + settings.fontContent.SizeInPoints + "pt; " +
+                    "color: " + ColorTranslator.ToHtml(settings.colorFG) + "; " +
+                    "background: " + ColorTranslator.ToHtml(settings.colorBG) + "; " +
+                "}\r\n" +
+                "pre { " +
+                    "font-family: " + settings.fontMonospace.Name + "; " +
+                    "font-size: " + settings.fontMonospace.SizeInPoints + "pt; " +
+                "}\r\n" +
                 "</style>\r\n"
             );
             foreach (char c in input) {

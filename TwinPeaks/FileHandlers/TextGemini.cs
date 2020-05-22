@@ -14,39 +14,27 @@ namespace TwinPeaks.FileHandlers
 
         private static string FormatLineAsHeading(string input)
         {
+            short[] sizes = {
+                0,
+                Properties.Settings.Default.fontSizeH1,
+                Properties.Settings.Default.fontSizeH2,
+                Properties.Settings.Default.fontSizeH3,
+            };
             int level = 0;
-            string starttag = "";
-            string endtag = "";
+            const string template = "<div style=\"font-size: {0}pt\"><u>{1}</u></div>";
 
-            foreach (char c in input.Take(3))
-            {
+            foreach (char c in input.Take(3)) {
                if (c == '#') { level += 1; }
                else { break; }
             }
-
-            switch(level) {
-                case 0:
-                    return input;
-                case 1:
-                    starttag = "<div style=\"font-size: 20pt\"><u>";
-                    endtag = "</u></div>";
-                    break;
-                case 2:
-                    starttag = "<div style=\"font-size: 16pt\"><u>";
-                    endtag = "</u></div>";
-                    break;
-                case 3:
-                default:
-                    starttag = "<div style=\"font-size: 14pt\"><u>";
-                    endtag = "</u></div>";
-                    break;
-            }
+            if (level == 0) { return input; }
 
             string heading = input.Substring(level).Trim();
             if (heading.EndsWith("<br/>")) {
                 heading = heading.Substring(0, heading.Length - "<br/>".Length);
             }
-            return starttag + heading + endtag;
+
+            return string.Format(template, sizes[level], heading);
         }
 
         private static string FormatLineAsLink(string input)

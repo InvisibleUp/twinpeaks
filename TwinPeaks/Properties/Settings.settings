@@ -1,7 +1,30 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TwinPeaks.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="fontContent" Roaming="true" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Arial, 11.25pt</Value>
+    </Setting>
+    <Setting Name="fontMonospace" Roaming="true" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Consolas, 11.25pt</Value>
+    </Setting>
+    <Setting Name="fontSizeH1" Roaming="true" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="fontSizeH2" Roaming="true" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">16</Value>
+    </Setting>
+    <Setting Name="fontSizeH3" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">14</Value>
+    </Setting>
+    <Setting Name="colorBG" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Window</Value>
+    </Setting>
+    <Setting Name="colorFG" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">WindowText</Value>
+    </Setting>
+    <Setting Name="uriHome" Type="System.Uri" Scope="User">
+      <Value Profile="(Default)">gemini://gemini.circumlunar.space/</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

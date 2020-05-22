@@ -16,7 +16,6 @@ namespace TwinPeaks
     {
         List<Uri> history = new List<Uri>();
         int historyPos = -1;
-        Uri home = new Uri("gemini://gemini.circumlunar.space/");
 
         public MainForm()
         {
@@ -28,6 +27,7 @@ namespace TwinPeaks
             lblStatus.Text = "Ready";
 
             // Navigate to homepage
+            Uri home = Properties.Settings.Default.uriHome;
             await Navigate(home);
             UpdateHistory(home);
         }
@@ -102,6 +102,7 @@ namespace TwinPeaks
 
         private async void btnHome_Click(object sender, EventArgs e)
         {
+            Uri home = Properties.Settings.Default.uriHome;
             if (await Navigate(home)) {
                 UpdateHistory(home);
             }

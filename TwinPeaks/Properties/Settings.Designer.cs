@@ -22,5 +22,105 @@ namespace TwinPeaks.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Arial, 11.25pt")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public global::System.Drawing.Font fontContent {
+            get {
+                return ((global::System.Drawing.Font)(this["fontContent"]));
+            }
+            set {
+                this["fontContent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas, 11.25pt")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public global::System.Drawing.Font fontMonospace {
+            get {
+                return ((global::System.Drawing.Font)(this["fontMonospace"]));
+            }
+            set {
+                this["fontMonospace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public short fontSizeH1 {
+            get {
+                return ((short)(this["fontSizeH1"]));
+            }
+            set {
+                this["fontSizeH1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        [global::System.Configuration.SettingsManageabilityAttribute(global::System.Configuration.SettingsManageability.Roaming)]
+        public short fontSizeH2 {
+            get {
+                return ((short)(this["fontSizeH2"]));
+            }
+            set {
+                this["fontSizeH2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        public short fontSizeH3 {
+            get {
+                return ((short)(this["fontSizeH3"]));
+            }
+            set {
+                this["fontSizeH3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Window")]
+        public global::System.Drawing.Color colorBG {
+            get {
+                return ((global::System.Drawing.Color)(this["colorBG"]));
+            }
+            set {
+                this["colorBG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WindowText")]
+        public global::System.Drawing.Color colorFG {
+            get {
+                return ((global::System.Drawing.Color)(this["colorFG"]));
+            }
+            set {
+                this["colorFG"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("gemini://gemini.circumlunar.space/")]
+        public global::System.Uri uriHome {
+            get {
+                return ((global::System.Uri)(this["uriHome"]));
+            }
+            set {
+                this["uriHome"] = value;
+            }
+        }
     }
 }
