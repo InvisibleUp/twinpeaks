@@ -122,5 +122,17 @@ namespace TwinPeaks.Properties {
                 this["uriHome"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("RoyalBlue")]
+        public global::System.Drawing.Color colorLink {
+            get {
+                return ((global::System.Drawing.Color)(this["colorLink"]));
+            }
+            set {
+                this["colorLink"] = value;
+            }
+        }
     }
 }

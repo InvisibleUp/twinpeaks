@@ -37,9 +37,10 @@
             this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.btnHome = new System.Windows.Forms.ToolStripButton();
             this.tbURL = new TwinPeaks.Controls.ToolStripSpringTextBox();
-            this.btnGo = new System.Windows.Forms.ToolStripButton();
-            this.btnOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.menuOptions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnGo = new System.Windows.Forms.ToolStripButton();
             this.statusStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +89,7 @@
             this.btnRefresh,
             this.btnHome,
             this.tbURL,
-            this.btnOptions,
+            this.menuOptions,
             this.btnGo});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -140,6 +141,34 @@
             // 
             this.tbURL.Name = "tbURL";
             this.tbURL.Size = new System.Drawing.Size(440, 25);
+            this.tbURL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbURL_KeyPress);
+            // 
+            // menuOptions
+            // 
+            this.menuOptions.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.menuOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.menuOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSettings,
+            this.btnAbout});
+            this.menuOptions.Image = global::TwinPeaks.Properties.Resources.icoOptions;
+            this.menuOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuOptions.Name = "menuOptions";
+            this.menuOptions.Size = new System.Drawing.Size(29, 22);
+            this.menuOptions.Text = "Options";
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(164, 22);
+            this.btnSettings.Text = "Settings...";
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(164, 22);
+            this.btnAbout.Text = "About TwinPeaks";
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // btnGo
             // 
@@ -151,25 +180,6 @@
             this.btnGo.Text = "Go";
             this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
             // 
-            // btnOptions
-            // 
-            this.btnOptions.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnOptions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAbout});
-            this.btnOptions.Image = global::TwinPeaks.Properties.Resources.icoOptions;
-            this.btnOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOptions.Name = "btnOptions";
-            this.btnOptions.Size = new System.Drawing.Size(29, 22);
-            this.btnOptions.Text = "Options";
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(180, 22);
-            this.btnAbout.Text = "About TwinPeaks";
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -179,7 +189,7 @@
             this.Controls.Add(this.htmlContent);
             this.Controls.Add(this.statusStrip);
             this.Name = "MainForm";
-            this.Text = "Twin Peaks v0.2.0";
+            this.Text = "Twin Peaks";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -201,8 +211,9 @@
         private System.Windows.Forms.ToolStripButton btnHome;
         private TwinPeaks.Controls.ToolStripSpringTextBox tbURL;
         private System.Windows.Forms.ToolStripButton btnGo;
-        private System.Windows.Forms.ToolStripDropDownButton btnOptions;
+        private System.Windows.Forms.ToolStripDropDownButton menuOptions;
         private System.Windows.Forms.ToolStripMenuItem btnAbout;
+        private System.Windows.Forms.ToolStripMenuItem btnSettings;
     }
 }
 

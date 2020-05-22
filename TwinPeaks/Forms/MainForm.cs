@@ -81,6 +81,7 @@ namespace TwinPeaks
         private async void btnGo_Click(object sender, EventArgs evt)
         {
             Uri target = new Uri(tbURL.Text);
+            if (target == history[historyPos]) { return; }
             if (await Navigate(target)) {
                 UpdateHistory(target);
             }
@@ -144,6 +145,19 @@ namespace TwinPeaks
         {
             var x = new Forms.AboutBox();
             x.ShowDialog();
+        }
+
+        private async void btnSettings_Click(object sender, EventArgs e)
+        {
+            var x = new Forms.Settings();
+            var result = x.ShowDialog();
+            // refresh
+            await Navigate(history[historyPos]);
+        }
+
+        private void tbURL_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter) { btnGo_Click(null, null); }
         }
     }
 }

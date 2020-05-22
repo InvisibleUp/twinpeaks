@@ -26,5 +26,8 @@
     <Setting Name="uriHome" Type="System.Uri" Scope="User">
       <Value Profile="(Default)">gemini://gemini.circumlunar.space/</Value>
     </Setting>
+    <Setting Name="colorLink" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">RoyalBlue</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

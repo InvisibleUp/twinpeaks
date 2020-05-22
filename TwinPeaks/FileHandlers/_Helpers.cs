@@ -9,6 +9,11 @@ namespace TwinPeaks.FileHandlers
 {
     class _Helpers
     {
+        private static String HexColor(Color c)
+        {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
+
         public static string Txt2Html(string input)
         {
             var settings = Properties.Settings.Default;
@@ -18,12 +23,16 @@ namespace TwinPeaks.FileHandlers
                 "html { " +
                     "font-family: " + settings.fontContent.Name + "; " +
                     "font-size: " + settings.fontContent.SizeInPoints + "pt; " +
-                    "color: " + ColorTranslator.ToHtml(settings.colorFG) + "; " +
-                    "background: " + ColorTranslator.ToHtml(settings.colorBG) + "; " +
+                    "color: " + HexColor(settings.colorFG) + "; " +
+                    "background-color: " + HexColor(settings.colorBG) + "; " +
+                    "padding: 6pt;" +
                 "}\r\n" +
                 "pre { " +
                     "font-family: " + settings.fontMonospace.Name + "; " +
                     "font-size: " + settings.fontMonospace.SizeInPoints + "pt; " +
+                "}\r\n" +
+                "a { " +
+                    "color: " + HexColor(settings.colorLink) + "; " +
                 "}\r\n" +
                 "</style>\r\n"
             );
